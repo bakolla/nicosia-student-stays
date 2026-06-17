@@ -1,4 +1,4 @@
-import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { UserCircle2, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useAppStore } from "@/lib/store";
@@ -15,12 +15,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isAuthed = useAppStore((s) => s.isOwnerAuthed);
-  const navigate = useNavigate();
-
-  const goOwner = () => {
-    setOpen(false);
-    navigate({ to: isAuthed ? "/owner/dashboard" : "/owner/login" });
-  };
+  const ownerPath = isAuthed ? "/owner/dashboard" : "/owner/login";
 
   const isActive = (to: string, exact: boolean) =>
     exact ? pathname === to : pathname === to || pathname.startsWith(to + "/");
@@ -48,15 +43,14 @@ export function SiteHeader() {
               </Link>
             );
           })}
-          <button
-            type="button"
-            onClick={goOwner}
+          <Link
+            to={ownerPath}
             aria-label="Panel właściciela"
             className="ml-2 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
           >
             <UserCircle2 className="h-4 w-4" />
             Panel właściciela
-          </button>
+          </Link>
         </nav>
 
         <button
@@ -83,13 +77,13 @@ export function SiteHeader() {
                 {n.label}
               </Link>
             ))}
-            <button
-              type="button"
-              onClick={goOwner}
+            <Link
+              to={ownerPath}
+              onClick={() => setOpen(false)}
               className="mt-1 inline-flex items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-muted-foreground hover:text-foreground"
             >
               <UserCircle2 className="h-4 w-4" /> Panel właściciela
-            </button>
+            </Link>
           </nav>
         </div>
       )}
