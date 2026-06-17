@@ -11,10 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as OwnerRouteImport } from './routes/owner'
 import { Route as ListingsRouteImport } from './routes/listings'
+import { Route as InquiryRouteImport } from './routes/inquiry'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OwnerIndexRouteImport } from './routes/owner.index'
+import { Route as OwnerLoginRouteImport } from './routes/owner.login'
+import { Route as OwnerDashboardRouteImport } from './routes/owner.dashboard'
 import { Route as ListingsIdRouteImport } from './routes/listings.$id'
 import { Route as OwnerListingsIndexRouteImport } from './routes/owner.listings.index'
 import { Route as OwnerInquiriesIndexRouteImport } from './routes/owner.inquiries.index'
@@ -30,6 +33,11 @@ const OwnerRoute = OwnerRouteImport.update({
 const ListingsRoute = ListingsRouteImport.update({
   id: '/listings',
   path: '/listings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InquiryRoute = InquiryRouteImport.update({
+  id: '/inquiry',
+  path: '/inquiry',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -50,6 +58,16 @@ const IndexRoute = IndexRouteImport.update({
 const OwnerIndexRoute = OwnerIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => OwnerRoute,
+} as any)
+const OwnerLoginRoute = OwnerLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => OwnerRoute,
+} as any)
+const OwnerDashboardRoute = OwnerDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => OwnerRoute,
 } as any)
 const ListingsIdRoute = ListingsIdRouteImport.update({
@@ -87,9 +105,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/faq': typeof FaqRoute
+  '/inquiry': typeof InquiryRoute
   '/listings': typeof ListingsRouteWithChildren
   '/owner': typeof OwnerRouteWithChildren
   '/listings/$id': typeof ListingsIdRoute
+  '/owner/dashboard': typeof OwnerDashboardRoute
+  '/owner/login': typeof OwnerLoginRoute
   '/owner/': typeof OwnerIndexRoute
   '/owner/inquiries/$id': typeof OwnerInquiriesIdRoute
   '/owner/listings/new': typeof OwnerListingsNewRoute
@@ -101,8 +122,11 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/faq': typeof FaqRoute
+  '/inquiry': typeof InquiryRoute
   '/listings': typeof ListingsRouteWithChildren
   '/listings/$id': typeof ListingsIdRoute
+  '/owner/dashboard': typeof OwnerDashboardRoute
+  '/owner/login': typeof OwnerLoginRoute
   '/owner': typeof OwnerIndexRoute
   '/owner/inquiries/$id': typeof OwnerInquiriesIdRoute
   '/owner/listings/new': typeof OwnerListingsNewRoute
@@ -115,9 +139,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/faq': typeof FaqRoute
+  '/inquiry': typeof InquiryRoute
   '/listings': typeof ListingsRouteWithChildren
   '/owner': typeof OwnerRouteWithChildren
   '/listings/$id': typeof ListingsIdRoute
+  '/owner/dashboard': typeof OwnerDashboardRoute
+  '/owner/login': typeof OwnerLoginRoute
   '/owner/': typeof OwnerIndexRoute
   '/owner/inquiries/$id': typeof OwnerInquiriesIdRoute
   '/owner/listings/new': typeof OwnerListingsNewRoute
@@ -131,9 +158,12 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/faq'
+    | '/inquiry'
     | '/listings'
     | '/owner'
     | '/listings/$id'
+    | '/owner/dashboard'
+    | '/owner/login'
     | '/owner/'
     | '/owner/inquiries/$id'
     | '/owner/listings/new'
@@ -145,8 +175,11 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/faq'
+    | '/inquiry'
     | '/listings'
     | '/listings/$id'
+    | '/owner/dashboard'
+    | '/owner/login'
     | '/owner'
     | '/owner/inquiries/$id'
     | '/owner/listings/new'
@@ -158,9 +191,12 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/faq'
+    | '/inquiry'
     | '/listings'
     | '/owner'
     | '/listings/$id'
+    | '/owner/dashboard'
+    | '/owner/login'
     | '/owner/'
     | '/owner/inquiries/$id'
     | '/owner/listings/new'
@@ -173,6 +209,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   FaqRoute: typeof FaqRoute
+  InquiryRoute: typeof InquiryRoute
   ListingsRoute: typeof ListingsRouteWithChildren
   OwnerRoute: typeof OwnerRouteWithChildren
 }
@@ -191,6 +228,13 @@ declare module '@tanstack/react-router' {
       path: '/listings'
       fullPath: '/listings'
       preLoaderRoute: typeof ListingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inquiry': {
+      id: '/inquiry'
+      path: '/inquiry'
+      fullPath: '/inquiry'
+      preLoaderRoute: typeof InquiryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -219,6 +263,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/owner/'
       preLoaderRoute: typeof OwnerIndexRouteImport
+      parentRoute: typeof OwnerRoute
+    }
+    '/owner/login': {
+      id: '/owner/login'
+      path: '/login'
+      fullPath: '/owner/login'
+      preLoaderRoute: typeof OwnerLoginRouteImport
+      parentRoute: typeof OwnerRoute
+    }
+    '/owner/dashboard': {
+      id: '/owner/dashboard'
+      path: '/dashboard'
+      fullPath: '/owner/dashboard'
+      preLoaderRoute: typeof OwnerDashboardRouteImport
       parentRoute: typeof OwnerRoute
     }
     '/listings/$id': {
@@ -279,6 +337,8 @@ const ListingsRouteWithChildren = ListingsRoute._addFileChildren(
 )
 
 interface OwnerRouteChildren {
+  OwnerDashboardRoute: typeof OwnerDashboardRoute
+  OwnerLoginRoute: typeof OwnerLoginRoute
   OwnerIndexRoute: typeof OwnerIndexRoute
   OwnerInquiriesIdRoute: typeof OwnerInquiriesIdRoute
   OwnerListingsNewRoute: typeof OwnerListingsNewRoute
@@ -288,6 +348,8 @@ interface OwnerRouteChildren {
 }
 
 const OwnerRouteChildren: OwnerRouteChildren = {
+  OwnerDashboardRoute: OwnerDashboardRoute,
+  OwnerLoginRoute: OwnerLoginRoute,
   OwnerIndexRoute: OwnerIndexRoute,
   OwnerInquiriesIdRoute: OwnerInquiriesIdRoute,
   OwnerListingsNewRoute: OwnerListingsNewRoute,
@@ -302,6 +364,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   FaqRoute: FaqRoute,
+  InquiryRoute: InquiryRoute,
   ListingsRoute: ListingsRouteWithChildren,
   OwnerRoute: OwnerRouteWithChildren,
 }
