@@ -26,7 +26,7 @@ const schema = z
     moveIn: z.string().min(1, "Wybierz datę wprowadzenia"),
     moveOut: z.string().min(1, "Wybierz datę wyprowadzki"),
     listingId: z.string().min(1, "Wybierz ofertę"),
-    tenants: z.coerce.number().int().min(1).max(10),
+    tenants: z.number().int().min(1).max(10),
     message: z.string().trim().min(10, "Wiadomość musi mieć co najmniej 10 znaków").max(1000),
   })
   .refine((d) => new Date(d.moveOut) > new Date(d.moveIn), {
