@@ -9,38 +9,204 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as OwnerRouteImport } from './routes/owner'
+import { Route as ListingsRouteImport } from './routes/listings'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OwnerIndexRouteImport } from './routes/owner.index'
+import { Route as ListingsIdRouteImport } from './routes/listings.$id'
+import { Route as OwnerListingsIndexRouteImport } from './routes/owner.listings.index'
+import { Route as OwnerInquiriesIndexRouteImport } from './routes/owner.inquiries.index'
+import { Route as OwnerListingsNewRouteImport } from './routes/owner.listings.new'
+import { Route as OwnerInquiriesIdRouteImport } from './routes/owner.inquiries.$id'
+import { Route as OwnerListingsIdEditRouteImport } from './routes/owner.listings.$id.edit'
 
+const OwnerRoute = OwnerRouteImport.update({
+  id: '/owner',
+  path: '/owner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ListingsRoute = ListingsRouteImport.update({
+  id: '/listings',
+  path: '/listings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OwnerIndexRoute = OwnerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => OwnerRoute,
+} as any)
+const ListingsIdRoute = ListingsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ListingsRoute,
+} as any)
+const OwnerListingsIndexRoute = OwnerListingsIndexRouteImport.update({
+  id: '/listings/',
+  path: '/listings/',
+  getParentRoute: () => OwnerRoute,
+} as any)
+const OwnerInquiriesIndexRoute = OwnerInquiriesIndexRouteImport.update({
+  id: '/inquiries/',
+  path: '/inquiries/',
+  getParentRoute: () => OwnerRoute,
+} as any)
+const OwnerListingsNewRoute = OwnerListingsNewRouteImport.update({
+  id: '/listings/new',
+  path: '/listings/new',
+  getParentRoute: () => OwnerRoute,
+} as any)
+const OwnerInquiriesIdRoute = OwnerInquiriesIdRouteImport.update({
+  id: '/inquiries/$id',
+  path: '/inquiries/$id',
+  getParentRoute: () => OwnerRoute,
+} as any)
+const OwnerListingsIdEditRoute = OwnerListingsIdEditRouteImport.update({
+  id: '/listings/$id/edit',
+  path: '/listings/$id/edit',
+  getParentRoute: () => OwnerRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/faq': typeof FaqRoute
+  '/listings': typeof ListingsRouteWithChildren
+  '/owner': typeof OwnerRouteWithChildren
+  '/listings/$id': typeof ListingsIdRoute
+  '/owner/': typeof OwnerIndexRoute
+  '/owner/inquiries/$id': typeof OwnerInquiriesIdRoute
+  '/owner/listings/new': typeof OwnerListingsNewRoute
+  '/owner/inquiries/': typeof OwnerInquiriesIndexRoute
+  '/owner/listings/': typeof OwnerListingsIndexRoute
+  '/owner/listings/$id/edit': typeof OwnerListingsIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/faq': typeof FaqRoute
+  '/listings': typeof ListingsRouteWithChildren
+  '/listings/$id': typeof ListingsIdRoute
+  '/owner': typeof OwnerIndexRoute
+  '/owner/inquiries/$id': typeof OwnerInquiriesIdRoute
+  '/owner/listings/new': typeof OwnerListingsNewRoute
+  '/owner/inquiries': typeof OwnerInquiriesIndexRoute
+  '/owner/listings': typeof OwnerListingsIndexRoute
+  '/owner/listings/$id/edit': typeof OwnerListingsIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/faq': typeof FaqRoute
+  '/listings': typeof ListingsRouteWithChildren
+  '/owner': typeof OwnerRouteWithChildren
+  '/listings/$id': typeof ListingsIdRoute
+  '/owner/': typeof OwnerIndexRoute
+  '/owner/inquiries/$id': typeof OwnerInquiriesIdRoute
+  '/owner/listings/new': typeof OwnerListingsNewRoute
+  '/owner/inquiries/': typeof OwnerInquiriesIndexRoute
+  '/owner/listings/': typeof OwnerListingsIndexRoute
+  '/owner/listings/$id/edit': typeof OwnerListingsIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/faq'
+    | '/listings'
+    | '/owner'
+    | '/listings/$id'
+    | '/owner/'
+    | '/owner/inquiries/$id'
+    | '/owner/listings/new'
+    | '/owner/inquiries/'
+    | '/owner/listings/'
+    | '/owner/listings/$id/edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/faq'
+    | '/listings'
+    | '/listings/$id'
+    | '/owner'
+    | '/owner/inquiries/$id'
+    | '/owner/listings/new'
+    | '/owner/inquiries'
+    | '/owner/listings'
+    | '/owner/listings/$id/edit'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/faq'
+    | '/listings'
+    | '/owner'
+    | '/listings/$id'
+    | '/owner/'
+    | '/owner/inquiries/$id'
+    | '/owner/listings/new'
+    | '/owner/inquiries/'
+    | '/owner/listings/'
+    | '/owner/listings/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  FaqRoute: typeof FaqRoute
+  ListingsRoute: typeof ListingsRouteWithChildren
+  OwnerRoute: typeof OwnerRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/owner': {
+      id: '/owner'
+      path: '/owner'
+      fullPath: '/owner'
+      preLoaderRoute: typeof OwnerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/listings': {
+      id: '/listings'
+      path: '/listings'
+      fullPath: '/listings'
+      preLoaderRoute: typeof ListingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +214,97 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/owner/': {
+      id: '/owner/'
+      path: '/'
+      fullPath: '/owner/'
+      preLoaderRoute: typeof OwnerIndexRouteImport
+      parentRoute: typeof OwnerRoute
+    }
+    '/listings/$id': {
+      id: '/listings/$id'
+      path: '/$id'
+      fullPath: '/listings/$id'
+      preLoaderRoute: typeof ListingsIdRouteImport
+      parentRoute: typeof ListingsRoute
+    }
+    '/owner/listings/': {
+      id: '/owner/listings/'
+      path: '/listings'
+      fullPath: '/owner/listings/'
+      preLoaderRoute: typeof OwnerListingsIndexRouteImport
+      parentRoute: typeof OwnerRoute
+    }
+    '/owner/inquiries/': {
+      id: '/owner/inquiries/'
+      path: '/inquiries'
+      fullPath: '/owner/inquiries/'
+      preLoaderRoute: typeof OwnerInquiriesIndexRouteImport
+      parentRoute: typeof OwnerRoute
+    }
+    '/owner/listings/new': {
+      id: '/owner/listings/new'
+      path: '/listings/new'
+      fullPath: '/owner/listings/new'
+      preLoaderRoute: typeof OwnerListingsNewRouteImport
+      parentRoute: typeof OwnerRoute
+    }
+    '/owner/inquiries/$id': {
+      id: '/owner/inquiries/$id'
+      path: '/inquiries/$id'
+      fullPath: '/owner/inquiries/$id'
+      preLoaderRoute: typeof OwnerInquiriesIdRouteImport
+      parentRoute: typeof OwnerRoute
+    }
+    '/owner/listings/$id/edit': {
+      id: '/owner/listings/$id/edit'
+      path: '/listings/$id/edit'
+      fullPath: '/owner/listings/$id/edit'
+      preLoaderRoute: typeof OwnerListingsIdEditRouteImport
+      parentRoute: typeof OwnerRoute
+    }
   }
 }
 
+interface ListingsRouteChildren {
+  ListingsIdRoute: typeof ListingsIdRoute
+}
+
+const ListingsRouteChildren: ListingsRouteChildren = {
+  ListingsIdRoute: ListingsIdRoute,
+}
+
+const ListingsRouteWithChildren = ListingsRoute._addFileChildren(
+  ListingsRouteChildren,
+)
+
+interface OwnerRouteChildren {
+  OwnerIndexRoute: typeof OwnerIndexRoute
+  OwnerInquiriesIdRoute: typeof OwnerInquiriesIdRoute
+  OwnerListingsNewRoute: typeof OwnerListingsNewRoute
+  OwnerInquiriesIndexRoute: typeof OwnerInquiriesIndexRoute
+  OwnerListingsIndexRoute: typeof OwnerListingsIndexRoute
+  OwnerListingsIdEditRoute: typeof OwnerListingsIdEditRoute
+}
+
+const OwnerRouteChildren: OwnerRouteChildren = {
+  OwnerIndexRoute: OwnerIndexRoute,
+  OwnerInquiriesIdRoute: OwnerInquiriesIdRoute,
+  OwnerListingsNewRoute: OwnerListingsNewRoute,
+  OwnerInquiriesIndexRoute: OwnerInquiriesIndexRoute,
+  OwnerListingsIndexRoute: OwnerListingsIndexRoute,
+  OwnerListingsIdEditRoute: OwnerListingsIdEditRoute,
+}
+
+const OwnerRouteWithChildren = OwnerRoute._addFileChildren(OwnerRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  FaqRoute: FaqRoute,
+  ListingsRoute: ListingsRouteWithChildren,
+  OwnerRoute: OwnerRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
