@@ -1,17 +1,16 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useState } from "react";
 import { useAppStore } from "@/lib/store";
 import { AMENITY_LABELS, NEIGHBORHOOD_INFO } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { InquiryDialog } from "@/components/inquiry-dialog";
 import { ArrowLeft, MapPin, MessageCircle, Facebook, CalendarDays } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 export const Route = createFileRoute("/listings/$id")({
   component: ListingDetail,
   notFoundComponent: () => (
     <div className="container-page py-24 text-center">
-      <h1 className="font-display text-3xl">Oferta nie znaleziona</h1>
+      <h1 className="font-display text-3xl">Oferta nie została znaleziona</h1>
       <Link to="/listings" className="mt-4 inline-block text-accent hover:underline">
         ← Wróć do ofert
       </Link>
@@ -26,13 +25,12 @@ export const Route = createFileRoute("/listings/$id")({
 function ListingDetail() {
   const { id } = Route.useParams();
   const listing = useAppStore((s) => s.listings.find((l) => l.id === id));
-  const [askOpen, setAskOpen] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
 
   if (!listing) {
     return (
       <div className="container-page py-24 text-center">
-        <h1 className="font-display text-3xl">Oferta nie znaleziona</h1>
+        <h1 className="font-display text-3xl">Oferta nie została znaleziona</h1>
         <Link to="/listings" className="mt-4 inline-block text-accent hover:underline">
           ← Wróć do ofert
         </Link>
@@ -172,14 +170,17 @@ function ListingDetail() {
               </span>
             </div>
 
-            <Button
-              onClick={() => setAskOpen(true)}
-              className="mt-5 w-full bg-accent text-accent-foreground hover:bg-accent/90"
-              size="lg"
-              disabled={listing.status === "unavailable"}
-            >
-              Zapytaj o dostępność
-            </Button>
+            {listing.status === "unavailable" ? (
+              <Button className="mt-5 w-full bg-accent text-accent-foreground hover:bg-accent/90" size="lg" disabled>
+                Zapytaj o dostępność
+              </Button>
+            ) : (
+              <Button asChild className="mt-5 w-full bg-accent text-accent-foreground hover:bg-accent/90" size="lg">
+                <Link to="/inquiry" search={{ listing: listing.id }}>
+                  Zapytaj o dostępność
+                </Link>
+              </Button>
+            )}
 
             <div className="mt-3 grid gap-2">
               <Button asChild variant="outline">
@@ -201,7 +202,6 @@ function ListingDetail() {
         </aside>
       </div>
 
-      <InquiryDialog open={askOpen} onOpenChange={setAskOpen} listingId={listing.id} />
     </div>
   );
 }
