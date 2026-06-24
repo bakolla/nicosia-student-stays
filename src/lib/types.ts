@@ -7,14 +7,7 @@ export type Neighborhood =
   | "Aglantzia"
   | "City Centre";
 
-export type Amenity =
-  | "ac"
-  | "bills"
-  | "balcony"
-  | "private_bath"
-  | "washer"
-  | "bus"
-  | "wifi";
+export type Amenity = "ac" | "bills" | "balcony" | "private_bath" | "washer" | "bus" | "wifi";
 
 export const AMENITY_LABELS: Record<Amenity, string> = {
   ac: "Klimatyzacja",
@@ -37,7 +30,8 @@ export const NEIGHBORHOODS: Neighborhood[] = [
 
 export const NEIGHBORHOOD_INFO: Record<Neighborhood, { description: string; nearby: string[] }> = {
   Engomi: {
-    description: "Spokojna dzielnica akademicka, blisko Uniwersytetu Cypryjskiego i Uniwersytetu Europejskiego.",
+    description:
+      "Spokojna dzielnica akademicka, blisko Uniwersytetu Cypryjskiego i Uniwersytetu Europejskiego.",
     nearby: ["Uniwersytet", "Supermarket", "Przystanek autobusowy", "Kawiarnia"],
   },
   Strovolos: {
@@ -49,7 +43,8 @@ export const NEIGHBORHOOD_INFO: Record<Neighborhood, { description: string; near
     nearby: ["Uniwersytet", "Przystanek autobusowy", "Kawiarnia"],
   },
   Lakatamia: {
-    description: "Cicha, rodzinna okolica z przystępnymi cenami i bezpośrednim autobusem do centrum.",
+    description:
+      "Cicha, rodzinna okolica z przystępnymi cenami i bezpośrednim autobusem do centrum.",
     nearby: ["Supermarket", "Przystanek autobusowy", "Siłownia"],
   },
   Aglantzia: {
@@ -57,7 +52,8 @@ export const NEIGHBORHOOD_INFO: Record<Neighborhood, { description: string; near
     nearby: ["Uniwersytet", "Kawiarnia", "Siłownia", "Supermarket"],
   },
   "City Centre": {
-    description: "Serce Nikozji — Stare Miasto, Ledra Street, restauracje, dworzec autobusowy międzymiastowy.",
+    description:
+      "Serce Nikozji — Stare Miasto, Ledra Street, restauracje, dworzec autobusowy międzymiastowy.",
     nearby: [
       "Centrum miasta",
       "Dworzec autobusowy międzymiastowy",

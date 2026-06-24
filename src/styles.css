@@ -69,7 +69,8 @@
   --ring: oklch(0.64 0.14 42);
 
   --shadow-soft: 0 4px 24px -8px oklch(0.36 0.05 145 / 0.12);
-  --shadow-card: 0 1px 2px oklch(0.27 0.03 145 / 0.04), 0 8px 28px -16px oklch(0.27 0.03 145 / 0.12);
+  --shadow-card:
+    0 1px 2px oklch(0.27 0.03 145 / 0.04), 0 8px 28px -16px oklch(0.27 0.03 145 / 0.12);
 }
 
 @layer base {
@@ -88,7 +89,10 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
     font-weight: 500;

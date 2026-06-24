@@ -41,8 +41,7 @@ export const useAppStore = create<State>()(
         set({
           listings: get().listings.map((l) => (l.id === id ? { ...l, ...patch } : l)),
         }),
-      deleteListing: (id) =>
-        set({ listings: get().listings.filter((l) => l.id !== id) }),
+      deleteListing: (id) => set({ listings: get().listings.filter((l) => l.id !== id) }),
       setListingStatus: (id, status) =>
         set({
           listings: get().listings.map((l) => (l.id === id ? { ...l, status } : l)),
@@ -67,7 +66,7 @@ export const useAppStore = create<State>()(
         }),
     }),
     {
-      name: "nicosia-stays-v1",
+      name: "nicosia-stays-v2",
       partialize: (s) => ({
         listings: s.listings,
         inquiries: s.inquiries,

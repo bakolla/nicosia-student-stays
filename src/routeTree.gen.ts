@@ -16,6 +16,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OwnerIndexRouteImport } from './routes/owner.index'
+import { Route as ListingsIndexRouteImport } from './routes/listings.index'
 import { Route as OwnerLoginRouteImport } from './routes/owner.login'
 import { Route as OwnerDashboardRouteImport } from './routes/owner.dashboard'
 import { Route as ListingsIdRouteImport } from './routes/listings.$id'
@@ -59,6 +60,11 @@ const OwnerIndexRoute = OwnerIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => OwnerRoute,
+} as any)
+const ListingsIndexRoute = ListingsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ListingsRoute,
 } as any)
 const OwnerLoginRoute = OwnerLoginRouteImport.update({
   id: '/login',
@@ -111,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/listings/$id': typeof ListingsIdRoute
   '/owner/dashboard': typeof OwnerDashboardRoute
   '/owner/login': typeof OwnerLoginRoute
+  '/listings/': typeof ListingsIndexRoute
   '/owner/': typeof OwnerIndexRoute
   '/owner/inquiries/$id': typeof OwnerInquiriesIdRoute
   '/owner/listings/new': typeof OwnerListingsNewRoute
@@ -123,10 +130,10 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/faq': typeof FaqRoute
   '/inquiry': typeof InquiryRoute
-  '/listings': typeof ListingsRouteWithChildren
   '/listings/$id': typeof ListingsIdRoute
   '/owner/dashboard': typeof OwnerDashboardRoute
   '/owner/login': typeof OwnerLoginRoute
+  '/listings': typeof ListingsIndexRoute
   '/owner': typeof OwnerIndexRoute
   '/owner/inquiries/$id': typeof OwnerInquiriesIdRoute
   '/owner/listings/new': typeof OwnerListingsNewRoute
@@ -145,6 +152,7 @@ export interface FileRoutesById {
   '/listings/$id': typeof ListingsIdRoute
   '/owner/dashboard': typeof OwnerDashboardRoute
   '/owner/login': typeof OwnerLoginRoute
+  '/listings/': typeof ListingsIndexRoute
   '/owner/': typeof OwnerIndexRoute
   '/owner/inquiries/$id': typeof OwnerInquiriesIdRoute
   '/owner/listings/new': typeof OwnerListingsNewRoute
@@ -164,6 +172,7 @@ export interface FileRouteTypes {
     | '/listings/$id'
     | '/owner/dashboard'
     | '/owner/login'
+    | '/listings/'
     | '/owner/'
     | '/owner/inquiries/$id'
     | '/owner/listings/new'
@@ -176,10 +185,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/faq'
     | '/inquiry'
-    | '/listings'
     | '/listings/$id'
     | '/owner/dashboard'
     | '/owner/login'
+    | '/listings'
     | '/owner'
     | '/owner/inquiries/$id'
     | '/owner/listings/new'
@@ -197,6 +206,7 @@ export interface FileRouteTypes {
     | '/listings/$id'
     | '/owner/dashboard'
     | '/owner/login'
+    | '/listings/'
     | '/owner/'
     | '/owner/inquiries/$id'
     | '/owner/listings/new'
@@ -265,6 +275,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OwnerIndexRouteImport
       parentRoute: typeof OwnerRoute
     }
+    '/listings/': {
+      id: '/listings/'
+      path: '/'
+      fullPath: '/listings/'
+      preLoaderRoute: typeof ListingsIndexRouteImport
+      parentRoute: typeof ListingsRoute
+    }
     '/owner/login': {
       id: '/owner/login'
       path: '/login'
@@ -326,10 +343,12 @@ declare module '@tanstack/react-router' {
 
 interface ListingsRouteChildren {
   ListingsIdRoute: typeof ListingsIdRoute
+  ListingsIndexRoute: typeof ListingsIndexRoute
 }
 
 const ListingsRouteChildren: ListingsRouteChildren = {
   ListingsIdRoute: ListingsIdRoute,
+  ListingsIndexRoute: ListingsIndexRoute,
 }
 
 const ListingsRouteWithChildren = ListingsRoute._addFileChildren(
